@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-8">
+    <h2>Búsquedas</h2>
+</div>
+<div class="col-md-4">
+    <app-input-buscar (resultadoBuscar)="CargarPeliculas($event)"></app-input-buscar>
+</div>
+</div>
+    <div class="row">
+    <div class="col-md-12">
+        <hr>
+        <app-peliculas-grilla-sin-borrar [peliculas]="peliculas"></app-peliculas-grilla-sin-borrar>
+    </div>
+</div>

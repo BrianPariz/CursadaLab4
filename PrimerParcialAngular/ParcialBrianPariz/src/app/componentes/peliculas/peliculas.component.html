@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2>Películas</h2>
+        <p *ngIf="mostrarListado"><a class="btn btn-primary btn-lg" routerLink="/peliculas" role="button" (click)="CambiarVisibilidadListado()">Volver al Listado</a></p>
+        <p *ngIf="!mostrarListado"><a class="btn btn-primary btn-lg" routerLink="/peliculas/alta" role="button" (click)="CambiarVisibilidadListado()">Crear Película</a></p>
+        <router-outlet></router-outlet>
+    </div>
+</div>

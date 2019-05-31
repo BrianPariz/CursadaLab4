@@ -1,0 +1,29 @@
+<div class="card">
+  <article class="card-body">
+      <h4 class="card-title mb-3 lblIng">Ingreso de Actor</h4>
+  <form>
+      <div class="form-group">
+          <label>Nombre</label>
+          <input class="form-control" placeholder="Ingrese un nombre.." [(ngModel)]="actor.Nombre" name="nombre">
+          <label *ngIf="nombreError" class="form-text text-danger">Falta nombre</label>
+      </div>
+      <div class="form-group">
+        <label>Apellido</label>
+        <input class="form-control" placeholder="Ingrese un apellido.." [(ngModel)]="actor.Apellido" name="apellido">
+        <label *ngIf="apellidoError" class="form-text text-danger">Falta apellido</label>
+    </div>
+    <div class="form-group">
+      <label>Nacionalidad</label>
+      <input class="form-control" placeholder="Ingrese un apellido.." [(ngModel)]="actor.Nacionalidad" name="nacionalidad">
+      <label *ngIf="nacionalidadError" class="form-text text-danger">Falta nacionalidad</label>
+  </div>
+      <div class="form-group">
+          <label>Fecha de Nacimiento</label>
+          <input class="form-control" type="date" placeholder="Ingrese una fecha de estreno.." [(ngModel)]="actor.FechaDeNacimiento" name="fechaDeNacimiento">
+          <label *ngIf="fechaDeNacimientoError" class="form-text text-danger">Falta ingresar la fecha de nacimiento</label>
+      </div>
+      <button id="btnAgregar" type="button" style="margin-right:1%;" class="btn btn-success pull-right" (click)="Agregar()"> Agregar </button>
+      <button id="btnLimpiar" type="reset" class="btn btn-info" (click)="ReestablecerTodo()"> Limpiar </button>
+      </form>
+  </article>
+</div>

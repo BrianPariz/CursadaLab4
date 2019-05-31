@@ -1,0 +1,41 @@
+<div class="card">
+    <article class="card-body">
+        <h4 class="card-title mb-3 lblIng">Ingreso de Película</h4>
+    <form>
+        <div class="form-group">
+            <label>Nombre</label>
+            <input class="form-control" placeholder="Ingrese un nombre.." [(ngModel)]="pelicula.Nombre" name="nombre">
+            <label *ngIf="nombreError" class="form-text text-danger">Falta nombre</label>
+        </div>
+        <div class="form-group">
+                <label>Tipo</label>
+                <select class="form-control" [(ngModel)]="pelicula.Tipo" name="tipo">
+                    <option value="null" selected>Seleccione un tipo..</option>
+                    <option value="romance">Romance</option>
+                    <option value="accion">Acción</option>
+                    <option value="fantasia">Fantasía</option>
+                    <option value="terror">Terror</option>
+                    <option value="comedia">Comedia</option>
+                </select>
+            <label *ngIf="tipoError" class="form-text text-danger">Falta seleccionar un tipo</label>
+        </div>
+        <div class="form-group">
+            <label>Fecha de Estreno</label>
+            <input class="form-control" type="date" placeholder="Ingrese una fecha de estreno.." [(ngModel)]="pelicula.FechaDeEstreno" name="fechaDeEstreno">
+            <label *ngIf="fechaDeEstrenoError" class="form-text text-danger">Falta ingresar la fecha de estreno</label>
+        </div>
+        <div class="form-group">
+            <label>Cantidad de público</label>
+            <input class="form-control" type="number" placeholder="Ingrese la cantidad de público.." [(ngModel)]="pelicula.CantDePublico" name="cantPublico">
+            <label *ngIf="cantPublicoError" class="form-text text-danger">Falta ingresar precio</label>
+        </div>
+        <div class="form-group">
+          <label>Estrella Principal</label>
+          <input class="form-control" placeholder="Ingrese una estrella.." [(ngModel)]="pelicula.EstrellaPrincipal" name="estrella">
+          <label *ngIf="estrellaError" class="form-text text-danger">Falta nombre de la estrella</label>
+      </div>
+        <button id="btnAgregar" type="button" style="margin-right:1%;" class="btn btn-success pull-right" (click)="Agregar()"> Agregar </button>
+        <button id="btnLimpiar" type="reset" class="btn btn-info" (click)="ReestablecerTodo()"> Limpiar </button>
+        </form>
+    </article>
+</div>

@@ -1,0 +1,79 @@
+{
+  "peliculas": [
+    {
+      "id": 2,
+      "Nombre": "Monster Inc.",
+      "Tipo": "Fantasía",
+      "FechaDeEstreno": "01/04/2007",
+      "CantDePublico": 1533,
+      "PathFoto": "../../../assets/imagenes/MonsterInc.jpeg",
+      "EstrellaPrincipal": "mike"
+    },
+    {
+      "id": 3,
+      "Nombre": "Terminator",
+      "Tipo": "Acción",
+      "FechaDeEstreno": "06/02/1996",
+      "CantDePublico": 121,
+      "PathFoto": "../../../assets/imagenes/Terminator.jpg",
+      "EstrellaPrincipal": "arnol"
+    },
+    {
+      "Nombre": "Terminator 2",
+      "Tipo": "accion",
+      "FechaDeEstreno": "1997-03-12",
+      "CantDePublico": 1235,
+      "EstrellaPrincipal": "arnol",
+      "PathFoto": "../../../assets/imagenes/movie.jpg",
+      "id": 4
+    },
+    {
+      "Nombre": "terminator 3",
+      "Tipo": "accion",
+      "FechaDeEstreno": "1009-12-12",
+      "CantDePublico": 12,
+      "EstrellaPrincipal": "arnol",
+      "PathFoto": "../../../assets/imagenes/movie.jpg",
+      "id": 5
+    }
+  ],
+  "actores": [
+    {
+      "Nombre": "mike",
+      "Apellido": "wasauski",
+      "Nacionalidad": "paraguayo",
+      "FechaDeNacimiento": "2100-04-23",
+      "id": 1
+    },
+    {
+      "Nombre": "arnol",
+      "Apellido": "gutierrez",
+      "Nacionalidad": "danés",
+      "FechaDeNacimiento": "2010-03-12",
+      "id": 2
+    },
+    {
+      "Nombre": "juan",
+      "Apellido": "pepe",
+      "Nacionalidad": "argentino",
+      "FechaDeNacimiento": "4222-03-12",
+      "id": 3
+    }
+  ],
+  "usuarios": [
+    {
+      "Nombre": "Alberto",
+      "Email": "alberto-kpo@gmail.com",
+      "Clave": "kpo210",
+      "Perfil": "user",
+      "id": 1
+    },
+    {
+      "Nombre": "juan",
+      "Email": "pedrito@gmail.com",
+      "Clave": "juanpedro",
+      "Perfil": "admin",
+      "id": 2
+    }
+  ]
+}

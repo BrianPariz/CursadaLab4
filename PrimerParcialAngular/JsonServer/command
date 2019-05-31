@@ -1,0 +1,9 @@
+npm run json:server
+
+{
+  "peliculas": [
+	  {"id":1,"Nombre":"Toy Story 4","Tipo":"Fantasía","FechaDeEstreno":"12/05/2023","CantDePublico":123123,"PathFoto":"../../../assets/imagenes/ToyStoryMovie.jpg"},
+	  {"id":2,"Nombre":"Monster Inc.","Tipo":"Fantasía","FechaDeEstreno":"01/04/2007","CantDePublico":1533,"PathFoto":"../../../assets/imagenes/MonsterInc.jpeg"},
+	  {"id":3,"Nombre":"Terminator","Tipo":"Acción","FechaDeEstreno":"06/02/1996","CantDePublico":121,"PathFoto":"../../../assets/imagenes/Terminator.jpg"}
+  ]
+}

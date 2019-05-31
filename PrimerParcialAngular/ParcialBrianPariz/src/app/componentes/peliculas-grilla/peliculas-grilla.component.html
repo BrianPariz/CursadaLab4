@@ -1,0 +1,24 @@
+<table class="table-striped table-dark" style="width:100%;text-align:center;">
+  <thead>
+    <th>Nombre</th>
+    <th>Tipo</th>
+    <th>Fecha de Estreno</th>
+    <th>Cantidad de Público</th>
+    <th>Foto de la Película</th>
+    <th>Borrar</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let peli of peliculas">
+      <td>{{peli.Nombre}}</td>
+      <td>{{peli.Tipo}}</td>
+      <td>{{peli.FechaDeEstreno}}</td>
+      <td>{{peli.CantDePublico}}</td>
+      <td>
+        <img src={{peli.PathFoto}} alt="Foto de la Película" height="112" width="112">
+      </td>
+      <td>
+        <app-btn-borrar [id]="peli.id" (borrado)="RefrescarLista($event)"></app-btn-borrar>
+      </td>
+    </tr>
+  </tbody>
+</table>

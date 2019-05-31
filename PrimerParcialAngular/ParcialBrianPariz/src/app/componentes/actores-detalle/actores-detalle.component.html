@@ -1,0 +1,10 @@
+<div class="card" style="width:1000px">
+  <div class="card-body">
+    <h4 class="card-title">Actor: {{actor.Nombre}} {{actor.Apellido}}</h4>
+    <p class="card-text">Nacionalidad: {{actor.Nacionalidad}}</p>
+    <p class="card-text">Fecha de Nacimiento: {{actor.FechaDeNacimiento}}</p>
+  </div>
+  <div class="card-footer">
+    <app-peliculas-grilla-sin-borrar [peliculas]="peliculas"></app-peliculas-grilla-sin-borrar>
+  </div>
+</div>

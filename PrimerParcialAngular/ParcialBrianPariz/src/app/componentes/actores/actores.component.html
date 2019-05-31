@@ -1,0 +1,6 @@
+<div class="col-md-12">
+  <h2>Actores</h2>
+  <p *ngIf="mostrarListado"><a class="btn btn-primary btn-lg" routerLink="/actor/listado" role="button" (click)="CambiarVisibilidadListado()">Volver al Listado</a></p>
+  <p *ngIf="!mostrarListado"><a class="btn btn-primary btn-lg" routerLink="/actor/alta" role="button" (click)="CambiarVisibilidadListado()">Alta Actor</a></p>
+  <router-outlet></router-outlet>
+</div>

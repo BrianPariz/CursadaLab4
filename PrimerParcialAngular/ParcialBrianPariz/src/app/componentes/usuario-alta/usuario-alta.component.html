@@ -1,0 +1,33 @@
+<div class="card">
+    <article class="card-body">
+        <h4 class="card-title mb-3 lblIng">Ingreso de Usuario</h4>
+    <form>
+        <div class="form-group">
+            <label>Nombre</label>
+            <input class="form-control" placeholder="Ingrese un nombre.." [(ngModel)]="usuario.Nombre" name="nombre">
+            <label *ngIf="nombreError" class="form-text text-danger">Falta nombre</label>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" placeholder="Ingrese un email.." type="email" [(ngModel)]="usuario.Email" name="email">
+            <label *ngIf="emailError" class="form-text text-danger">Falta email</label>
+        </div>
+        <div class="form-group">
+            <label>Clave</label>
+            <input class="form-control" placeholder="Ingrese una clave.." type="password" [(ngModel)]="usuario.Clave" name="clave">
+            <label *ngIf="claveError" class="form-text text-danger">Falta clave</label>
+        </div>
+        <div class="form-group">
+            <label>Perfil</label>
+            <select class="form-control" [(ngModel)]="usuario.Perfil" name="perfil">
+                <option value="null" selected>Seleccione un perfil..</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+            <label *ngIf="perfilError" class="form-text text-danger">Falta seleccionar un perfil</label>
+        </div>
+        <button id="btnAgregar" type="button" style="margin-right:1%;" class="btn btn-success pull-right" (click)="Agregar()"> Agregar </button>
+        <button id="btnLimpiar" type="reset" class="btn btn-info" (click)="ReestablecerTodo()"> Limpiar </button>
+        </form>
+    </article>
+</div>
