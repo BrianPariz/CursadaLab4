@@ -1,0 +1,9 @@
+@import "variables";
+
+.color_primary {
+    color: $primary;
+
+    &:hover {
+        color: $light-primary;
+    }
+}
