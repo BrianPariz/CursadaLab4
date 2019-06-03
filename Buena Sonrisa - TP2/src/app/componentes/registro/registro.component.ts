@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AuthService } from '../../servicios/Auth.service';
+import { UsuarioService } from '../../servicios/Usuario.service';
 import { Usuario } from 'src/app/clases/Usuario';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -13,25 +13,27 @@ import { Observable } from 'rxjs';
 })
 export class RegistroComponent implements OnInit {
 
-  @ViewChild("imgUsuario", { static: false }) InputImagenUser:ElementRef;
+  @ViewChild("imgUsuario", { static: false }) InputImagenUser: ElementRef;
 
-  private usuario: Usuario;
+  public usuario: Usuario;
   public imgName: string;
+  public cargandoImg: boolean;
 
   urlImagen: Observable<string>;
 
-  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) {
+  constructor(private usuarioService: UsuarioService, private router: Router, private storage: AngularFireStorage) {
     this.usuario = new Usuario();
     this.imgName = "Seleccionar imágen..";
+    this.cargandoImg = false;
   }
 
   ngOnInit() {
   }
 
   Registrarse() {
-    this.authService.RegistrarUsuario(this.usuario.Email, this.usuario.Password)
-      .then(res => {
-        this.authService.EstaLogeado().subscribe(usuario => {
+    this.usuarioService.RegistrarUsuario(this.usuario.Email, this.usuario.Password)
+      .then(() => {
+        this.usuarioService.EstaLogeado().subscribe(usuario => {
           if (usuario) {
             usuario.updateProfile({
               displayName: this.usuario.Nombre,
@@ -50,6 +52,7 @@ export class RegistroComponent implements OnInit {
   }
 
   ImagenCargada(e) {
+    this.cargandoImg = true;
     const img = e.target.files[0];
 
     if (img != undefined) {
@@ -64,5 +67,7 @@ export class RegistroComponent implements OnInit {
     else {
       this.imgName = "Seleccionar imágen..";
     }
+
+    this.cargandoImg = false;
   }
 }

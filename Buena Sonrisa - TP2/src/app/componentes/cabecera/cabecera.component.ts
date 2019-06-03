@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from '../../servicios/Auth.service';
+import { UsuarioService } from '../../servicios/Usuario.service';
 import { Usuario } from 'src/app/clases/Usuario';
 
 @Component({
@@ -10,11 +9,10 @@ import { Usuario } from 'src/app/clases/Usuario';
 })
 export class CabeceraComponent implements OnInit {
 
-  public usuario:Usuario;
+  public usuario: Usuario;
   public estaLogeado: boolean = true;
-  public imgUsuario: string;
 
-  constructor(private authService: AuthService, private afsAuth: AngularFireAuth) { 
+  constructor(private usuarioService: UsuarioService) {
     this.usuario = new Usuario();
   }
 
@@ -23,11 +21,15 @@ export class CabeceraComponent implements OnInit {
   }
 
   TraerUsuarioActual() {
-    this.authService.EstaLogeado().subscribe(user => {
+    this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
+        if (user.photoURL != null) {
+          this.usuario.ImagenUrl = user.photoURL;
+        } else {
+          this.usuario.ImagenUrl = "assets/img/default-user.png";
+        }
         this.usuario.Nombre = user.displayName;
         this.usuario.Email = user.email;
-        this.usuario.ImagenUrl = user.photoURL;
         this.estaLogeado = true;
       }
       else {
@@ -37,6 +39,6 @@ export class CabeceraComponent implements OnInit {
   }
 
   Deslogearse() {
-    this.afsAuth.auth.signOut();
+    this.usuarioService.DeslogearUsuario();
   }
 }

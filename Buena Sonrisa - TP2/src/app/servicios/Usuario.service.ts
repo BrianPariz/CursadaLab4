@@ -1,33 +1,41 @@
-import { Usuario } from 'src/app/clases/Usuario';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { MainHttpService } from 'src/app/servicios/MainHttp.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { map } from 'rxjs/operators';
+import { Usuario } from '../clases/Usuario';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor(private mainHttpService:MainHttpService<Usuario>) { }
+    private usuario:Usuario;
 
-  public TraerUno(id:number): Observable<Usuario> {
-    return this.mainHttpService.GetHttp('usuarios/', id);
-  }
+    constructor(private afsAuth: AngularFireAuth) 
+    { 
+        this.usuario = new Usuario();
+    }
 
-  public TraerTodos(): Observable<Usuario[]> {
-    return this.mainHttpService.GetAllHttp('usuarios/');
-  }
+    RegistrarUsuario(email: string, password: string) {
+        return new Promise((resolve, reject) => {
+            this.afsAuth.auth.createUserWithEmailAndPassword(email, password)
+                .then(userData => resolve(userData),
+                    err => reject(err));
+        })
+    }
 
-  public CrearUno(prod:Usuario) {
-    return this.mainHttpService.PostHttp('usuarios/', prod);
-  }
+    LogearUsuario(email: string, password: string) {
+        return new Promise((resolve, reject) => {
+            this.afsAuth.auth.signInWithEmailAndPassword(email, password)
+                .then(userData => resolve(userData),
+                    err => reject(err));
+        })
+    }
 
-  public ModificarUno(id:number, prod:Usuario) {
-    return this.mainHttpService.PutHttp('usuarios/', id, prod);
-  }
+    DeslogearUsuario() {
+        this.afsAuth.auth.signOut();
+    }
 
-  public BorrarUno(id:number) {
-    return this.mainHttpService.DeleteHttp('usuarios/', id);
-  }
+    EstaLogeado() {
+        return this.afsAuth.authState.pipe(map(auth => auth));
+    }
 }

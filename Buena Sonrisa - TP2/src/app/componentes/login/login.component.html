@@ -8,13 +8,16 @@
         <div class="card fat">
           <div class="card-body">
             <h4 class="card-title">Entrá a tu cuenta</h4>
-            <form (ngSubmit)="Logearse()" ngNativeValidate>
+            <form (ngSubmit)="f.form.valid && Logearse()" #f="ngForm" novalidate>
 
               <div class="form-group">
                 <label for="email">Dirección de Email</label>
 
-                <input id="email" type="email" class="form-control" name="email" [(ngModel)]="usuario.Email" required
-                  autofocus>
+                <input id="email" type="email" class="form-control" name="email" [(ngModel)]="usuario.Email"
+                #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required autofocus>
+                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                  <div *ngIf="email.errors.required">Ingrese el Email</div>
+                </div>
               </div>
 
               <div class="form-group">
@@ -24,13 +27,15 @@
                   </a> -->
                 </label>
                 <input id="password" type="password" class="form-control" name="password" [(ngModel)]="usuario.Password"
-                  required data-eye>
+                #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
+                <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                  <div *ngIf="password.errors.required">Ingrese la contraseña</div>
+                </div>
               </div>
 
               <form class="margin-bottom">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck" name="remember" value="1"
-                    required>
+                  <input type="checkbox" class="custom-control-input" id="customCheck" name="remember">
                   <label class="custom-control-label" for="customCheck">Recordarme</label>
                 </div>
               </form>

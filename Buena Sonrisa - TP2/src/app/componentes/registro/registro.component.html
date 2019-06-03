@@ -8,23 +8,33 @@
         <div class="card fat">
           <div class="card-body">
             <h4 class="card-title">Creá tu cuenta</h4>
-            <form (ngSubmit)="Registrarse()" ngNativeValidate>
+            <form (ngSubmit)="f.form.valid && acepTYC.valid && Registrarse()" #f="ngForm" novalidate>
 
               <div class="form-group">
                 <label for="name">Nombre</label>
-                <input id="name" type="text" class="form-control" name="name" [(ngModel)]="usuario.Nombre" required
-                  autofocus>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="usuario.Nombre"
+                  #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required autofocus>
+                <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+                  <div *ngIf="name.errors.required">Nombre requerido</div>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="email">Dirección de Email</label>
-                <input id="email" type="email" class="form-control" name="email" [(ngModel)]="usuario.Email" required>
+                <input type="email" class="form-control" name="email" id="email" [(ngModel)]="usuario.Email"
+                  #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required>
+                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                  <div *ngIf="email.errors.required">Email requerido</div>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input id="password" type="password" class="form-control" name="password" [(ngModel)]="usuario.Password"
-                  required data-eye>
+                <input type="password" class="form-control" name="password" id="password" [(ngModel)]="usuario.Password"
+                  #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
+                <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                  <div *ngIf="password.errors.required">Contraseña requerida</div>
+                </div>
               </div>
 
               <form class="form-group">
@@ -40,15 +50,28 @@
 
               <form class="margin-bottom">
                 <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck" name="aggree" value="1" required>
-                  <label class="custom-control-label" for="customCheck">Acepto los términos y condiciones</label>
+                  <input type="checkbox" class="custom-control-input" id="customCheck" name="customCheck"
+                    [(ngModel)]="accepted" #acepTYC="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && acepTYC.invalid }" required>
+                  <label class="custom-control-label" for="customCheck">Acepto los términos y
+                    condiciones</label>
                 </div>
               </form>
 
               <div class="form-group no-margin">
-                <button type="submit" class="btn btn-primary btn-block">
-                  Registrarse
-                </button>
+
+                <ng-container *ngIf="!cargandoImg; else registroDeshabilitado">
+                  <button type="submit" class="btn btn-primary btn-block">
+                    Registrarse
+                  </button>
+                </ng-container>
+
+                <ng-template #registroDeshabilitado>
+                  <button type="submit" disabled=true class="btn btn-secondary btn-block">
+                    Registrarse
+                  </button>
+                </ng-template>
+
               </div>
               <div class="margin-top20 text-center">
                 Ya tenés una cuenta? <a routerLink="/logearse">Ingresá</a>

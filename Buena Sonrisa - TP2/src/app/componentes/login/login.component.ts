@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../servicios/Auth.service';
+import { UsuarioService } from '../../servicios/Usuario.service';
 import { Usuario } from 'src/app/clases/Usuario';
 
 @Component({
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   private usuario:Usuario;
 
-  constructor(private authService: AuthService, private router: Router, ) 
+  constructor(private usuarioService: UsuarioService, private router: Router) 
   { 
     this.usuario = new Usuario();
   }
@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit {
   }
 
   Logearse() {
-    this.authService.LogearUsuario(this.usuario.Email, this.usuario.Password)
+    this.usuarioService.LogearUsuario(this.usuario.Email, this.usuario.Password)
     .then(res => {
-      this.router.navigate([''])
+      this.router.navigate(['']);
     })
     .catch(err => {
       console.log('err', err.message)
