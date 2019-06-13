@@ -17,12 +17,11 @@ export class LoginComponent implements OnInit {
     this.usuario = new Usuario();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   Logearse() {
     this.usuarioService.LogearUsuario(this.usuario.Email, this.usuario.Password)
-    .then(res => {
+    .then(() => {
       this.router.navigate(['']);
     })
     .catch(err => {

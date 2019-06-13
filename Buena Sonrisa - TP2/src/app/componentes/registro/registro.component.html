@@ -37,6 +37,8 @@
                 </div>
               </div>
 
+              <!-- carga de imágen -->
+
               <form class="form-group">
                 <label for="customFile">Imágen</label>
                 <div class="custom-file">
@@ -47,6 +49,8 @@
               </form>
 
               <input #imgUsuario type="hidden" [value]="urlImagen | async">
+
+              <!-- *************** -->
 
               <form class="margin-bottom">
                 <div class="custom-control custom-checkbox">
@@ -60,7 +64,7 @@
 
               <div class="form-group no-margin">
 
-                <ng-container *ngIf="!cargandoImg; else registroDeshabilitado">
+                <ng-container *ngIf="(urlImagen | async) || noCargando; else registroDeshabilitado">
                   <button type="submit" class="btn btn-primary btn-block">
                     Registrarse
                   </button>

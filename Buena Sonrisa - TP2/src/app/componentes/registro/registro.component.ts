@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { UsuarioService } from '../../servicios/Usuario.service';
 import { Usuario } from 'src/app/clases/Usuario';
 import { finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 
 @Component({
   selector: 'app-registro',
@@ -17,42 +16,25 @@ export class RegistroComponent implements OnInit {
 
   public usuario: Usuario;
   public imgName: string;
-  public cargandoImg: boolean;
 
+  porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
+  noCargando = true;
 
-  constructor(private usuarioService: UsuarioService, private router: Router, private storage: AngularFireStorage) {
+  constructor(private usuarioService: UsuarioService, private storage: AngularFireStorage) {
     this.usuario = new Usuario();
     this.imgName = "Seleccionar imágen..";
-    this.cargandoImg = false;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   Registrarse() {
-    this.usuarioService.RegistrarUsuario(this.usuario.Email, this.usuario.Password)
-      .then(() => {
-        this.usuarioService.EstaLogeado().subscribe(usuario => {
-          if (usuario) {
-            usuario.updateProfile({
-              displayName: this.usuario.Nombre,
-              photoURL: this.InputImagenUser.nativeElement.value
-            }).then(() => {
-              this.router.navigate(['']);
-            }).catch((err) => {
-              console.log(err.message);
-            })
-          }
-        })
-      })
-      .catch(err => {
-        console.log('err', err.message);
-      })
+    var usuarioPhoto = this.InputImagenUser.nativeElement.value;
+    this.usuarioService.RegistrarUsuario(this.usuario.Email, this.usuario.Password, this.usuario.Nombre, usuarioPhoto);
   }
 
   ImagenCargada(e) {
-    this.cargandoImg = true;
+    this.noCargando = false;
     const img = e.target.files[0];
 
     if (img != undefined) {
@@ -62,12 +44,13 @@ export class RegistroComponent implements OnInit {
       const filePath = "imagenes/usuarios/" + nombreImg + "-" + Date.now() + "." + ext;
       const ref = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, img);
+      this.porcentajeUpload = task.percentageChanges();
       task.snapshotChanges().pipe(finalize(() => this.urlImagen = ref.getDownloadURL())).subscribe();
     }
     else {
       this.imgName = "Seleccionar imágen..";
+      this.urlImagen = empty();
+      this.noCargando = true;
     }
-
-    this.cargandoImg = false;
   }
 }

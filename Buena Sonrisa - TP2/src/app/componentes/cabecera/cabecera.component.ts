@@ -18,6 +18,11 @@ export class CabeceraComponent implements OnInit {
 
   ngOnInit() {
     this.TraerUsuarioActual();
+
+    this.usuarioService.registrarUsuarioEmitter.subscribe(user => {
+      this.usuario.ImagenUrl = user.photoURL;
+      this.usuario.Nombre = user.displayName;
+    });
   }
 
   TraerUsuarioActual() {

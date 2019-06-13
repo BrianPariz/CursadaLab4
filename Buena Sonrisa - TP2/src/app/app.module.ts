@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
-import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { PrincipalComponent } from './componentes/principal/principal.component';
@@ -18,16 +18,19 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
+import { FileSelectDirective } from "ng2-file-upload";
+
 @NgModule({
   declarations: [
     AppComponent,
+    FileSelectDirective,
     PrincipalComponent,
     CabeceraComponent,
     PieComponent,
     LoginComponent,
     InicioComponent,
     Error404Component,
-    RegistroComponent
+    RegistroComponent,
   ],
   imports: [
     BrowserModule,
