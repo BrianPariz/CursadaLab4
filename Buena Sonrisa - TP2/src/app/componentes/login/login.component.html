@@ -13,7 +13,7 @@
               <div class="form-group">
                 <label for="email">Dirección de Email</label>
 
-                <input id="email" type="email" class="form-control" name="email" [(ngModel)]="usuario.Email"
+                <input id="email" type="email" class="form-control" name="email" [(ngModel)]="emailModel"
                 #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required autofocus>
                 <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                   <div *ngIf="email.errors.required">Ingrese el Email</div>
@@ -26,7 +26,7 @@
                     Te olvidaste la contraseña?
                   </a> -->
                 </label>
-                <input id="password" type="password" class="form-control" name="password" [(ngModel)]="usuario.Password"
+                <input id="password" type="password" class="form-control" name="password" [(ngModel)]="passwordModel"
                 #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
                 <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
                   <div *ngIf="password.errors.required">Ingrese la contraseña</div>

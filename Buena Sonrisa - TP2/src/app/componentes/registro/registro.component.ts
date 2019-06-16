@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { UsuarioService } from '../../servicios/Usuario.service';
-import { Usuario } from 'src/app/clases/Usuario';
+import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { finalize } from 'rxjs/operators';
 import { Observable, empty } from 'rxjs';
+import { Perfil } from 'src/app/clases/Usuario';
 
 @Component({
   selector: 'app-registro',
@@ -13,24 +13,26 @@ import { Observable, empty } from 'rxjs';
 export class RegistroComponent implements OnInit {
 
   @ViewChild("imgUsuario", { static: false }) InputImagenUser: ElementRef;
-
-  public usuario: Usuario;
-  public imgName: string;
+  
+  imgName: string;
+  nombreModel: string;
+  emailModel: string;
+  passwordModel: string;
 
   porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
   noCargando = true;
 
   constructor(private usuarioService: UsuarioService, private storage: AngularFireStorage) {
-    this.usuario = new Usuario();
     this.imgName = "Seleccionar imágen..";
   }
 
   ngOnInit() { }
 
   Registrarse() {
+    this.usuarioService.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
     var usuarioPhoto = this.InputImagenUser.nativeElement.value;
-    this.usuarioService.RegistrarUsuario(this.usuario.Email, this.usuario.Password, this.usuario.Nombre, usuarioPhoto);
+    this.usuarioService.RegistrarUsuario(this.emailModel, this.passwordModel, this.nombreModel, usuarioPhoto);
   }
 
   ImagenCargada(e) {

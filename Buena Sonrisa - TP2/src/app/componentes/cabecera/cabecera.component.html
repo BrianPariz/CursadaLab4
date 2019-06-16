@@ -17,8 +17,8 @@
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded">
-                        <img src="{{usuario.ImagenUrl}}" class="img-responsive user-img">
-                        <span class="">{{usuario.Nombre}}</span>
+                        <img src="{{usuarioService.usuario.ImagenUrl}}" class="img-responsive user-img">
+                        <span class="">{{usuarioService.usuario.Nombre}}</span>
                     </a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado" (click)="Deslogearse()">

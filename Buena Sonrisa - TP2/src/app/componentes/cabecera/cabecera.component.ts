@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../../servicios/Usuario.service';
-import { Usuario } from 'src/app/clases/Usuario';
+import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
 @Component({
   selector: 'app-cabecera',
@@ -9,38 +8,31 @@ import { Usuario } from 'src/app/clases/Usuario';
 })
 export class CabeceraComponent implements OnInit {
 
-  public usuario: Usuario;
   public estaLogeado: boolean = true;
 
-  constructor(private usuarioService: UsuarioService) {
-    this.usuario = new Usuario();
-  }
+  constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     this.TraerUsuarioActual();
-
-    this.usuarioService.registrarUsuarioEmitter.subscribe(user => {
-      this.usuario.ImagenUrl = user.photoURL;
-      this.usuario.Nombre = user.displayName;
-    });
   }
 
   TraerUsuarioActual() {
     this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
         if (user.photoURL != null) {
-          this.usuario.ImagenUrl = user.photoURL;
+          this.usuarioService.usuario.ImagenUrl = user.photoURL;
         } else {
-          this.usuario.ImagenUrl = "assets/img/default-user.png";
+          this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
         }
-        this.usuario.Nombre = user.displayName;
-        this.usuario.Email = user.email;
+        this.usuarioService.usuario.Nombre = user.displayName;
+        this.usuarioService.usuario.Email = user.email;
+        this.usuarioService.usuario.Uid = user.uid;
         this.estaLogeado = true;
       }
       else {
         this.estaLogeado = false;
       }
-    })
+    });
   }
 
   Deslogearse() {
