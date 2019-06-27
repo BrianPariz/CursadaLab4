@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-login',
@@ -9,11 +10,10 @@ import { UsuarioService } from 'src/app/servicios/Usuario.service';
 })
 export class LoginComponent implements OnInit {
 
-  emailModel:string;
-  passwordModel:string;
+  emailModel: string;
+  passwordModel: string;
 
-  constructor(private usuarioService: UsuarioService, private router: Router) 
-  { 
+  constructor(private usuarioService: UsuarioService, private router: Router, private ns: NotificationsService) {
     this.emailModel = "";
     this.passwordModel = "";
   }
@@ -21,12 +21,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   Logearse() {
-    this.usuarioService.LogearUsuario(this.emailModel, this.passwordModel)
-      .then(() => {
-        this.router.navigate(['']);
-      })
-      .catch(err => {
-        console.log('err', err.message)
-      })
+    this.usuarioService.LogearUsuario(this.emailModel, this.passwordModel);
   }
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { Mensaje } from 'src/app/clases/Mensaje';
 import { map } from 'rxjs/operators';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ export class ChatComponent implements OnInit {
   mensajes: Observable<Mensaje[]>;
   mensaje: Mensaje;
 
-  constructor(private afs: AngularFirestore, private usuarioService: UsuarioService) {
+  constructor(private afs: AngularFirestore, private usuarioService: UsuarioService, private ns: NotificationsService) {
     this.mensaje = new Mensaje();
     this.mensajesCollection = afs.collection<Mensaje>('mensajes');
     this.mensajes = this.mensajesCollection.valueChanges().pipe(
@@ -28,11 +29,12 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ns.success("joya", "anda");
   }
 
   NuevoMensaje() {
-    
-    if(this.mensaje.Mensaje == undefined || this.mensaje.Mensaje.trim() == '') {
+
+    if (this.mensaje.Mensaje == undefined || this.mensaje.Mensaje.trim() == '') {
       return;
     }
 

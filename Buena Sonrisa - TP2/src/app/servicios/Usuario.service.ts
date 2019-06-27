@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
-// import { EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioInterface, Perfil } from '../clases/Usuario';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NotificationsService } from 'angular2-notifications';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +13,9 @@ export class UsuarioService {
 
     usuario: UsuarioInterface;
     private redirectUrl: string = '/';
-	private loginUrl: string = '/logearse';
+    private loginUrl: string = '/logearse';
 
-    constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router) {
+    constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private ns: NotificationsService) {
         this.UsuarioVacio();
     }
 
@@ -29,7 +29,11 @@ export class UsuarioService {
                             photoURL: fotoUrl
                         });
                     },
-                    (err) => console.log(err)
+                    (err) => {
+                        console.log(err);
+                        this.UsuarioVacio();
+                        this.ns.error("Error al registrarse", "Sucedió un error al registrarse, intente nuevamente.");
+                    }
                 )
                 .then(
                     () => {
@@ -42,16 +46,19 @@ export class UsuarioService {
                                     this.usuario.Nombre = userData.displayName;
                                     this.usuario.Activo = false;
                                     this.db.collection('usuarios').doc(userData.uid).set(this.usuario);
+                                    this.ns.success("Registro exitoso!");
+                                    this.router.navigate(['']);
                                 }
                                 else {
-                                    //this.UsuarioVacio();
+                                    this.UsuarioVacio();
                                 }
                             },
-                            (err) => console.log(err));
-                        this.router.navigate(['']);
-                    },
-                    (err) => console.log(err)
-                );
+                            (err) => {
+                                console.log(err);
+                                this.UsuarioVacio();
+                                this.ns.error("Error inesperado", "Sucedió un error inesperado.");
+                            });
+                    });
         });
     }
 
@@ -65,12 +72,17 @@ export class UsuarioService {
                             this.usuario.Email = userData.user.email;
                             this.usuario.ImagenUrl = userData.user.photoURL;
                             this.usuario.Nombre = userData.user.displayName;
+                            this.ns.success("Logeo exitoso!");
                         }
                         else {
                             this.UsuarioVacio();
                         }
                     },
-                    (err) => console.log(err));
+                    (err) => {
+                        console.log(err);
+                        this.UsuarioVacio();
+                        this.ns.error("Error al logearse", "Sucedió un error al logearse, intente.");
+                    });
         });
     }
 
@@ -96,12 +108,12 @@ export class UsuarioService {
     }
 
     isUserLoggedIn(): boolean {
-		return this.afsAuth.auth.currentUser != null;
-	}
-	setRedirectUrl(url: string): void {
-		this.redirectUrl = url;
-	}
-	getLoginUrl(): string {
-		return this.loginUrl;
-	}
+        return this.afsAuth.auth.currentUser != null;
+    }
+    setRedirectUrl(url: string): void {
+        this.redirectUrl = url;
+    }
+    getLoginUrl(): string {
+        return this.loginUrl;
+    }
 }

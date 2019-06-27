@@ -13,7 +13,7 @@ import { Perfil } from 'src/app/clases/Usuario';
 export class RegistroComponent implements OnInit {
 
   @ViewChild("imgUsuario", { static: false }) InputImagenUser: ElementRef;
-  
+
   imgName: string;
   nombreModel: string;
   emailModel: string;
@@ -32,7 +32,7 @@ export class RegistroComponent implements OnInit {
   Registrarse() {
     this.usuarioService.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
     var usuarioPhoto = this.InputImagenUser.nativeElement.value;
-    if(!usuarioPhoto){
+    if (!usuarioPhoto) {
       usuarioPhoto = this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
     }
     this.usuarioService.RegistrarUsuario(this.emailModel, this.passwordModel, this.nombreModel, usuarioPhoto);

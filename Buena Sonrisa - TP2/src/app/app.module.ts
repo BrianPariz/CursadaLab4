@@ -22,6 +22,7 @@ import { ChatComponent } from './componentes/chat/chat.component';
 import { MaterialModule } from './componentes/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuardService } from './servicios/AuthGuard.service';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   declarations: [
@@ -45,10 +46,18 @@ import { AuthGuardService } from './servicios/AuthGuard.service';
     AngularFireStorageModule,
     AngularFirestoreModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot({
+      position: ['top', 'right'],
+      timeOut: 4000,
+      showProgressBar: true,
+      pauseOnHover: true,
+      clickToClose: true
+    })
   ],
   exports: [
-    MaterialModule
+    MaterialModule,
+    SimpleNotificationsModule
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent]
