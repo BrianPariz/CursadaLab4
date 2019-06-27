@@ -1,3 +1,34 @@
-<p>
-  chat works!
-</p>
+<section class="h-100 login-pagina">
+  <div class="container h-100">
+    <div class="row justify-content-md-left h-100">
+      <div class="card-wrapper">
+
+        <ul *ngFor="let mensaje of mensajes | async">
+          <li style="list-style: none;" *ngIf="mensaje.UserUid != this.usuarioService.usuario.Uid; else liMe">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded">
+              <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
+              <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
+            </a>
+          </li>
+
+          <ng-template #liMe>
+            <li style="list-style: none;">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded">
+                <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
+                <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ul>
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input matInput [(ngModel)]="this.mensaje.Mensaje" name="inputMsj" placeholder="Escribe tu mensaje.." autofocus>
+          </mat-form-field>
+        </form>
+
+        <button mat-raised-button color="primary" (click)="NuevoMensaje()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -19,11 +19,11 @@ export class CabeceraComponent implements OnInit {
   TraerUsuarioActual() {
     this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
-        if (user.photoURL != null) {
-          this.usuarioService.usuario.ImagenUrl = user.photoURL;
-        } else {
-          this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
-        }
+        // if (user.photoURL != null) {
+        //   this.usuarioService.usuario.ImagenUrl = user.photoURL;
+        // } else {
+        //   this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
+        // }
         this.usuarioService.usuario.Nombre = user.displayName;
         this.usuarioService.usuario.Email = user.email;
         this.usuarioService.usuario.Uid = user.uid;

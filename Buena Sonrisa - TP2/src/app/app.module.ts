@@ -19,6 +19,8 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { ChatComponent } from './componentes/chat/chat.component';
+import { MaterialModule } from './componentes/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,12 @@ import { ChatComponent } from './componentes/chat/chat.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MaterialModule,
+    BrowserAnimationsModule
+  ],
+  exports: [
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

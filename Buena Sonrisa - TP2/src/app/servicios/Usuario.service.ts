@@ -42,7 +42,7 @@ export class UsuarioService {
                                     this.db.collection('usuarios').doc(userData.uid).set(this.usuario);
                                 }
                                 else {
-                                    this.UsuarioVacio();
+                                    //this.UsuarioVacio();
                                 }
                             },
                             (err) => console.log(err));

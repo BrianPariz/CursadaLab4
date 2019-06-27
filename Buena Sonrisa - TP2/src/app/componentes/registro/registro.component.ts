@@ -32,6 +32,9 @@ export class RegistroComponent implements OnInit {
   Registrarse() {
     this.usuarioService.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
     var usuarioPhoto = this.InputImagenUser.nativeElement.value;
+    if(!usuarioPhoto){
+      usuarioPhoto = this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
+    }
     this.usuarioService.RegistrarUsuario(this.emailModel, this.passwordModel, this.nombreModel, usuarioPhoto);
   }
 
