@@ -21,6 +21,7 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { ChatComponent } from './componentes/chat/chat.component';
 import { MaterialModule } from './componentes/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthGuardService } from './servicios/AuthGuard.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   exports: [
     MaterialModule
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

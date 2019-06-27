@@ -12,6 +12,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class UsuarioService {
 
     usuario: UsuarioInterface;
+    private redirectUrl: string = '/';
+	private loginUrl: string = '/logearse';
 
     constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router) {
         this.UsuarioVacio();
@@ -92,4 +94,14 @@ export class UsuarioService {
             Perfil: Perfil.Cliente
         }
     }
+
+    isUserLoggedIn(): boolean {
+		return this.afsAuth.auth.currentUser != null;
+	}
+	setRedirectUrl(url: string): void {
+		this.redirectUrl = url;
+	}
+	getLoginUrl(): string {
+		return this.loginUrl;
+	}
 }

@@ -5,12 +5,13 @@ import { Error404Component } from './componentes/error404/error404.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { ChatComponent } from './componentes/chat/chat.component';
+import { AuthGuardService } from './servicios/AuthGuard.service';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'logearse', component: LoginComponent },
   { path: 'registrarse', component: RegistroComponent },
-  { path: 'chat', component: ChatComponent },
+  { path: 'chat', component: ChatComponent, canActivate: [ AuthGuardService ] },
   { path: '404', component: Error404Component }, 
   { path: '**', redirectTo: '404' }
   // {

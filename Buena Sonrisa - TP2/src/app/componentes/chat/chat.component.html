@@ -1,33 +1,44 @@
-<section class="h-100 login-pagina">
+<section class="h-100 chat">
   <div class="container h-100">
-    <div class="row justify-content-md-left h-100">
+    <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
+        <div class="card fat">
+          <div class="card-body" style="text-align: center;">
+            <form>
+              <ul *ngFor="let mensaje of mensajes | async" class="ulChatUser">
 
-        <ul *ngFor="let mensaje of mensajes | async">
-          <li style="list-style: none;" *ngIf="mensaje.UserUid != this.usuarioService.usuario.Uid; else liMe">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded">
-              <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
-              <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
-            </a>
-          </li>
+                <li *ngIf="mensaje.UserUid != this.usuarioService.usuario.Uid; else liMe">
+                  <div class="divChatUser">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded">
+                      <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
+                      <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
+                    </a>
+                  </div>
+                </li>
 
-          <ng-template #liMe>
-            <li style="list-style: none;">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded">
-                <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
-                <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
-              </a>
-            </li>
-          </ng-template>
-        </ul>
+                <ng-template #liMe>
+                  <li>
+                    <div class="divChatUserMe">
+                      <a class="nav-link py-3 px-0 px-lg-3 rounded">
+                        <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
+                        <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
+                      </a>
+                    </div>
+                  </li>
+                </ng-template>
 
-        <form class="example-form">
-          <mat-form-field class="example-full-width">
-            <input matInput [(ngModel)]="this.mensaje.Mensaje" name="inputMsj" placeholder="Escribe tu mensaje.." autofocus>
-          </mat-form-field>
-        </form>
+              </ul>
 
-        <button mat-raised-button color="primary" (click)="NuevoMensaje()">Enviar</button>
+              <mat-form-field class="example-full-width">
+                <input matInput [(ngModel)]="this.mensaje.Mensaje" name="inputMsj" placeholder="Escribe tu mensaje.."
+                  autofocus>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" (click)="NuevoMensaje()">Enviar</button>
+
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -31,6 +31,11 @@ export class ChatComponent implements OnInit {
   }
 
   NuevoMensaje() {
+    
+    if(this.mensaje.Mensaje == undefined || this.mensaje.Mensaje.trim() == '') {
+      return;
+    }
+
     this.mensaje.UserUid = this.usuarioService.usuario.Uid;
     this.mensaje.UrlImagen = this.usuarioService.usuario.ImagenUrl;
     this.mensaje.Nombre = this.usuarioService.usuario.Nombre;
