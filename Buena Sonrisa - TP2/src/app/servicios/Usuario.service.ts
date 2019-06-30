@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UsuarioInterface, Perfil } from '../clases/Usuario';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NotificationsService } from 'angular2-notifications';
+import { DataApiService } from './DataApi.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -12,21 +14,23 @@ import { NotificationsService } from 'angular2-notifications';
 export class UsuarioService {
 
     usuario: UsuarioInterface;
+    estaLogeado: boolean;
     private redirectUrl: string = '/';
     private loginUrl: string = '/logearse';
+    private incioUrl: string = '';
 
-    constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private ns: NotificationsService) {
-        this.UsuarioVacio();
+    constructor(private afsAuth: AngularFireAuth, private db: AngularFirestore, private router: Router, private ns: NotificationsService, private dataApi: DataApiService) {
+        this.usuario = this.UsuarioVacio();
     }
 
-    RegistrarUsuario(email: string, password: string, nombre: string, fotoUrl: string) {
+    RegistrarUsuario(usuario: UsuarioInterface) {
         return new Promise(() => {
-            this.afsAuth.auth.createUserWithEmailAndPassword(email, password)
+            this.afsAuth.auth.createUserWithEmailAndPassword(usuario.Email, usuario.Password)
                 .then(
                     (userData) => {
                         return userData.user.updateProfile({
-                            displayName: nombre,
-                            photoURL: fotoUrl
+                            displayName: usuario.Nombre,
+                            photoURL: usuario.ImagenUrl
                         });
                     },
                     (err) => {
@@ -37,17 +41,21 @@ export class UsuarioService {
                 )
                 .then(
                     () => {
-                        this.EstaLogeado().subscribe(
+                        this.EstaLogeado().pipe(take(1)).subscribe(
                             (userData) => {
                                 if (userData) {
-                                    this.usuario.Uid = userData.uid;
-                                    this.usuario.Email = userData.email;
-                                    this.usuario.ImagenUrl = userData.photoURL;
-                                    this.usuario.Nombre = userData.displayName;
-                                    this.usuario.Activo = false;
-                                    this.db.collection('usuarios').doc(userData.uid).set(this.usuario);
-                                    this.ns.success("Registro exitoso!");
+                                    usuario.Password = '';
+                                    usuario.Uid = userData.uid;
+                                    usuario.Email = userData.email;
+                                    usuario.ImagenUrl = userData.photoURL;
+                                    usuario.Nombre = userData.displayName;
+                                    usuario.Perfil = usuario.Perfil;
+                                    usuario.Activo = false;
+                                    this.ns.success("Registro exitoso", "Espere a la activación del administrador.");
                                     this.router.navigate(['']);
+                                    this.db.collection('usuarios').doc(userData.uid).set(usuario).then(() => {
+                                        this.DeslogearUsuario();
+                                    });
                                 }
                                 else {
                                     this.UsuarioVacio();
@@ -68,27 +76,37 @@ export class UsuarioService {
                 .then(
                     (userData) => {
                         if (userData) {
-                            this.usuario.Uid = userData.user.uid;
-                            this.usuario.Email = userData.user.email;
-                            this.usuario.ImagenUrl = userData.user.photoURL;
-                            this.usuario.Nombre = userData.user.displayName;
-                            this.ns.success("Logeo exitoso!");
+                            this.dataApi.TraerUno(userData.user.uid, 'usuarios').pipe(take(1)).subscribe(userx => {
+                                if (!userx.Activo) {
+                                    this.ns.warn("No se pudo logear", "La cuenta es todavía no fue activada por el administrador.");
+                                    this.DeslogearUsuario();
+                                }
+                                else {
+                                    this.usuario.Uid = userx.Uid;
+                                    this.usuario.Email = userx.Email;
+                                    this.usuario.ImagenUrl = userx.ImagenUrl;
+                                    this.usuario.Nombre = userx.Nombre;
+                                    this.usuario.Perfil = userx.Perfil;
+                                    this.ns.success("Logeo exitoso!");
+                                    this.router.navigate(['']);
+                                }
+                            });
                         }
                         else {
-                            this.UsuarioVacio();
+                            this.usuario = this.UsuarioVacio();
                         }
                     },
                     (err) => {
                         console.log(err);
-                        this.UsuarioVacio();
-                        this.ns.error("Error al logearse", "Sucedió un error al logearse, intente.");
+                        this.usuario = this.UsuarioVacio();
+                        this.ns.error("Error al logearse", "La cuenta es inexistente.");
                     });
         });
     }
 
     DeslogearUsuario() {
+        this.usuario = this.UsuarioVacio();
         this.afsAuth.auth.signOut();
-        this.UsuarioVacio();
     }
 
     EstaLogeado() {
@@ -96,7 +114,7 @@ export class UsuarioService {
     }
 
     UsuarioVacio() {
-        this.usuario = {
+        return {
             Uid: '',
             Nombre: '',
             Email: '',
@@ -108,7 +126,7 @@ export class UsuarioService {
     }
 
     isUserLoggedIn(): boolean {
-        return this.afsAuth.auth.currentUser != null;
+        return this.estaLogeado;
     }
     setRedirectUrl(url: string): void {
         this.redirectUrl = url;
@@ -116,4 +134,31 @@ export class UsuarioService {
     getLoginUrl(): string {
         return this.loginUrl;
     }
+    getInicioUrl(): string {
+        return this.incioUrl;
+    }
+
+    EstadoLogeo() {
+        this.afsAuth.auth.onAuthStateChanged(
+            (user) => {
+                if (user) {
+                    this.dataApi.TraerUno(user.uid, 'usuarios').pipe(take(1)).subscribe(userx => {
+                        this.usuario = userx;
+                    });
+
+                    this.estaLogeado = true;
+                }
+                else
+                    this.estaLogeado = false;
+            },
+            () => {
+                this.estaLogeado = false;
+            }
+        );
+    }
 }
+
+
+
+
+

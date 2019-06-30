@@ -4,10 +4,4 @@ export class Mensaje {
     UserUid: string;
     Nombre: string;
     UrlImagen:string;
-
-    // constructor(msj:string, fecha:number, userUid:string) {
-    //     this.Mensaje = msj;
-    //     this.Fecha = fecha;
-    //     this.UserUid = userUid;
-    // }
 }

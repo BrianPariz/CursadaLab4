@@ -19,10 +19,11 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { Error404Component } from './componentes/error404/error404.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { ChatComponent } from './componentes/chat/chat.component';
-import { MaterialModule } from './componentes/material.module';
+import { MaterialModule } from './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuardService } from './servicios/AuthGuard.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     Error404Component,
     RegistroComponent,
     ChatComponent,
+    ListaUsuariosComponent
   ],
   imports: [
     BrowserModule,

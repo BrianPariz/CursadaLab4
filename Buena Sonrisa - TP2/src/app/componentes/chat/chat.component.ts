@@ -29,7 +29,6 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ns.success("joya", "anda");
   }
 
   NuevoMensaje() {

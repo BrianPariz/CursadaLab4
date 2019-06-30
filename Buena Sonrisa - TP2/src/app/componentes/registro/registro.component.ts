@@ -3,7 +3,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { finalize } from 'rxjs/operators';
 import { Observable, empty } from 'rxjs';
-import { Perfil } from 'src/app/clases/Usuario';
+import { Perfil, UsuarioInterface } from 'src/app/clases/Usuario';
 
 @Component({
   selector: 'app-registro',
@@ -18,6 +18,7 @@ export class RegistroComponent implements OnInit {
   nombreModel: string;
   emailModel: string;
   passwordModel: string;
+  usuario: UsuarioInterface;
 
   porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
@@ -25,17 +26,23 @@ export class RegistroComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService, private storage: AngularFireStorage) {
     this.imgName = "Seleccionar imágen..";
+    this.usuario = this.usuarioService.UsuarioVacio();
   }
 
   ngOnInit() { }
 
   Registrarse() {
-    this.usuarioService.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
-    var usuarioPhoto = this.InputImagenUser.nativeElement.value;
-    if (!usuarioPhoto) {
-      usuarioPhoto = this.usuarioService.usuario.ImagenUrl = "assets/img/default-user.png";
+    this.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
+    this.usuario.Email = this.emailModel;
+    this.usuario.Nombre = this.nombreModel;
+    this.usuario.Password = this.passwordModel;
+    this.usuario.ImagenUrl = this.InputImagenUser.nativeElement.value;
+
+    if (!this.usuario.ImagenUrl) {
+      this.usuario.ImagenUrl = "assets/img/default-user.png";
     }
-    this.usuarioService.RegistrarUsuario(this.emailModel, this.passwordModel, this.nombreModel, usuarioPhoto);
+    
+    this.usuarioService.RegistrarUsuario(this.usuario);
   }
 
   ImagenCargada(e) {
