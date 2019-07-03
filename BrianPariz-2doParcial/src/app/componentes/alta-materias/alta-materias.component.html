@@ -1,0 +1,59 @@
+<section class="h-100 registro-pagina">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper">
+
+        <div class="card fat">
+          <div class="card-body">
+            <h4 class="card-title">Alta materia</h4>
+            <form (ngSubmit)="f.form.valid && Alta()" #f="ngForm" novalidate>
+
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="nombreModel" #name="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required autofocus>
+                <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+                  <div *ngIf="name.errors.required">Nombre requerido</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="profesor">Profesor</label>
+                <input type="text" class="form-control" name="profesor" id="profesor" [(ngModel)]="profesorModel"
+                  #profesor="ngModel" [ngClass]="{ 'is-invalid': f.submitted && profesor.invalid }" required autofocus>
+                <div *ngIf="f.submitted && profesor.invalid" class="invalid-feedback">
+                  <div *ngIf="profesor.errors.required">Profesor requerido</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cupos">Cupos</label>
+                <input type="number" class="form-control" name="cupos" id="cupos" [(ngModel)]="cuposModel"
+                  #cupos="ngModel" [ngClass]="{ 'is-invalid': f.submitted && cupos.invalid }" required autofocus>
+                <div *ngIf="f.submitted && cupos.invalid" class="invalid-feedback">
+                  <div *ngIf="cupos.errors.required">Cupos requeridos</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cuatri">Cuatrimestre</label>
+                <select class="form-control" name="cuatri" id="cuatri">
+                  <option [ngValue]="PrimerCuatrimestre">Primero</option>
+                  <option [ngValue]="SegundoCuatrimestre">Segundo</option>
+                </select>
+              </div>
+
+              <div class="form-group no-margin">
+
+                <button type="submit" class="btn btn-primary btn-block">
+                  Agregar
+                </button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

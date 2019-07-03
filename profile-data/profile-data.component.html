@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header card-header-saime">
+                <h4 class="card-title">Datos de la persona</h4>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="profileForm" (ngSubmit)="search()">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div *ngIf="hasImage(person.personImage); else imageDefault">
+                                <img [src]="person.personImage" width="100%" />
+                            </div>
+
+                            <ng-template #imageDefault>
+                                <img src="/assets/img/profile-placeholder.jpg" width="100%" />
+                            </ng-template>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="licenseControl" placeholder="Carnet"
+                                            [readonly]="personReadOnly" [required]="!personReadOnly">
+                                        <mat-error *ngIf="licenseControl.errors?.required">
+                                            Carnet <strong>requerido</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf=" licenseControl.errors?.pattern && licenseControl.touched">
+                                            Solo se permiten números
+                                        </mat-error>
+                                        <mat-error *ngIf="licenseControl.errors?.maxlength && licenseControl.touched">
+                                            Máximo 10 caracteres
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="identityNumberControl" placeholder="Cédula"
+                                            [readonly]="personReadOnly" [required]="!passportNumberControl.value && !personReadOnly">
+                                        <mat-error *ngIf="identityNumberControl.errors?.required">
+                                            Cédula o pasaporte <strong>requerido</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="identityNumberControl.errors?.pattern && identityNumberControl.touched">
+                                            Solo se permiten números
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="identityNumberControl.errors?.maxlength && identityNumberControl.touched">
+                                            Máximo 10 caracteres
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="nationalityControl" placeholder="Nacionalidad"
+                                            [readonly]="personReadOnly" [required]="!personReadOnly">
+                                        <mat-error *ngIf="nationalityControl.errors?.required">
+                                            Nacionalidad <strong>requerida</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="nationalityControl.errors?.pattern && nationalityControl.touched">
+                                            Solo se permiten letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="passportNumberControl" placeholder="Pasaporte"
+                                            [readonly]="personReadOnly" [required]="!identityNumberControl.value && !personReadOnly">
+                                        <mat-error *ngIf="passportNumberControl.errors?.required">
+                                            Cédula o pasaporte <strong>requerido</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="passportNumberControl.errors?.pattern && passportNumberControl.touched">
+                                            Solo se permiten números y letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="firstNameControl" placeholder="Primer Nombre"
+                                            [readonly]="personReadOnly" [required]="!personReadOnly">
+                                        <mat-error *ngIf="firstNameControl.errors?.required">
+                                            Primer nombre <strong>requerido</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf="firstNameControl.errors?.pattern && firstNameControl.touched">
+                                            Solo se permiten letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="secondNameControl" placeholder="Segundo Nombre"
+                                            [disabled]="personReadOnly">
+                                        <mat-error
+                                            *ngIf="secondNameControl.errors?.pattern && secondNameControl.touched">
+                                            Solo se permiten letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="firstSurnameControl"
+                                            placeholder="Primer Apellido" [readonly]="personReadOnly"
+                                            [required]="!personReadOnly">
+                                        <mat-error *ngIf="firstSurnameControl.errors?.required">
+                                            Primer apellido <strong>requerido</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="firstSurnameControl.errors?.pattern && firstSurnameControl.touched">
+                                            Solo se permiten letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="secondSurnameControl"
+                                            placeholder="Segundo Apellido" [readonly]="personReadOnly">
+                                        <mat-error
+                                            *ngIf="secondSurnameControl.errors?.pattern && secondSurnameControl.touched">
+                                            Solo se permiten letras
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field>
+                                        <input matInput formControlName="birthDateControl" [min]="minDate"
+                                            [max]="maxDate" [matDatepicker]="picker" placeholder="Fecha de Nacimiento"
+                                            [readonly]="personReadOnly" [required]="!personReadOnly">
+                                        <mat-error *ngIf="birthDateControl.errors?.required">
+                                            Fecha de nacimiento <strong>requerida</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf="!birthDateControl.errors?.required">
+                                            Fecha de nacimiento inválida
+                                        </mat-error>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker [disabled]="personReadOnly"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <div *ngIf="personReadOnly; else gender">
+                                        <mat-form-field>
+                                            <input matInput formControlName="genderControl" placeholder="Género"
+                                                type="text" [readonly]="personReadOnly">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <ng-template #gender>
+                                        <mat-form-field>
+                                            <mat-label>Género</mat-label>
+                                            <mat-select formControlName="genderControl" required>
+                                                <mat-option value="Masculino">Masculino</mat-option>
+                                                <mat-option value="Femenino">Femenino</mat-option>
+                                            </mat-select>
+                                            <mat-error> Género <strong>requerido</strong></mat-error>
+                                        </mat-form-field>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <app-capturer-verification [profileForm]="profileForm" [hidden]="!captureBiometry"
+            (finalizeVerificationEvent)="confirmPerson($event)" (resetFingersEvent)="clear()">
+        </app-capturer-verification>
+    </div>
+    <div class="col-md-6" [hidden]="!personReadOnly">
+        <div class="card">
+            <div class="card-header card-header-saime">
+                <h4 class="card-title">Documentación</h4>
+            </div>
+            <div class="card-body d-flex justify-content-center">
+
+                <div
+                    *ngIf="!hasImage(person.documentFirstImage) && !hasImage(person.documentSecondImage) && !hasImage(person.passportImage); else documentation">
+                    <h4>No se encontró documentación</h4>
+                </div>
+
+                <ng-template #documentation>
+                    <mat-tab-group>
+                        <mat-tab label="Documento Frente" *ngIf="hasImage(person.documentFirstImage)">
+                            <img [src]="person.documentFirstImage" class="imgDocumentation" />
+                        </mat-tab>
+                        <mat-tab label="Documento Reverso" *ngIf="hasImage(person.documentSecondImage)">
+                            <img [src]="person.documentSecondImage" class="imgDocumentation" />
+                        </mat-tab>
+                        <mat-tab label="Pasaporte" *ngIf="hasImage(person.passportImage)">
+                            <img [src]="person.passportImage" class="imgDocumentation" />
+                        </mat-tab>
+                    </mat-tab-group>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
