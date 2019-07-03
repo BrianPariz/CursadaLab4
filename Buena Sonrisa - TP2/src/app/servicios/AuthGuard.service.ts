@@ -27,6 +27,12 @@ export class AuthGuardService implements CanActivate {
           return true;
         }
       }
+
+      if (url == '/turnos') {
+        if (this.usuarioService.usuario.Perfil != Perfil.Administrador) {
+          return true;
+        }
+      }
     }
 
     this.router.navigate([this.usuarioService.getInicioUrl()]);

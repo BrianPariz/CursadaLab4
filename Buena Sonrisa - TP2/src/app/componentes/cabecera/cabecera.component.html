@@ -17,6 +17,10 @@
                     *ngIf="estaLogeado && administrador">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/administracion">Administración</a>
                 </li>
+                <li class="nav-item mx-0 mx-lg-1"
+                    *ngIf="estaLogeado && cliente">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/turnos">Turnos</a>
+                </li>
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="!estaLogeado">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/registrarse">Creá tu cuenta</a>
                 </li>

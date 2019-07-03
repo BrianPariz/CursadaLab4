@@ -53,8 +53,10 @@ export class DataApiService {
         }));
     }
 
-    AgregarUno(objeto: any): void {
-        this.objetosCollection.add(objeto);
+    AgregarUno(objeto: any, dataNombre: string): void {
+        // this.objetosCollection.add(objeto);
+        this.afs.collection(dataNombre).add(objeto);
+        // .doc().set(objeto);
     }
 
     ModificarUno(objeto: any, dataNombre: string): void {
@@ -67,4 +69,10 @@ export class DataApiService {
         this.objetoDoc = this.afs.doc<any>(`${dataNombre}/${id}`);
         this.objetoDoc.delete();
     }
+
+    // CrearUno() {
+    //     this.db.collection('usuarios').doc(userData.uid).set(usuario).then(() => {
+    //         this.DeslogearUsuario();
+    //     });
+    // }
 }
