@@ -18,7 +18,8 @@ import { MatToolbarModule, MatIconModule, MatButtonModule, MatSelectModule, MatF
     MatDatepickerModule,
     MatCheckboxModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatNativeDateModule
   ],
   exports: [
     MatFormFieldModule,
@@ -33,7 +34,8 @@ import { MatToolbarModule, MatIconModule, MatButtonModule, MatSelectModule, MatF
     MatDatepickerModule,
     MatCheckboxModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-ve' }

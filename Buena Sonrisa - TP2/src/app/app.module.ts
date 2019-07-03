@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 
@@ -24,6 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuardService } from './servicios/AuthGuard.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
+import { TurnoCreacionComponent } from './componentes/turno-creacion/turno-creacion.component';
+import { TurnoListaComponent } from './componentes/turno-lista/turno-lista.component';
+import { TurnoComponent } from './componentes/turno/turno.component';
 
 @NgModule({
   declarations: [
@@ -36,12 +39,16 @@ import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuar
     Error404Component,
     RegistroComponent,
     ChatComponent,
-    ListaUsuariosComponent
+    ListaUsuariosComponent,
+    TurnoCreacionComponent,
+    TurnoListaComponent,
+    TurnoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
