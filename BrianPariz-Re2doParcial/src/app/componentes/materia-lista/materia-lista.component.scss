@@ -1,11 +1,23 @@
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-  .no-resultados {
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-  }
+.no-resultados {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.row-red {
+  background-color: red;
+}
+
+.row-yellow {
+  background-color: yellow;
+}
+
+.row-green {
+  background-color: green;
+}

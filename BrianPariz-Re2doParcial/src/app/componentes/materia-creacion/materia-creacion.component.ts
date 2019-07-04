@@ -58,7 +58,9 @@ export class MateriaCreacionComponent implements OnInit {
       Cuatrimestre: this.formMaterias.get('cuatrimestre').value,
       Cupos: this.formMaterias.get('cupos').value,
       ProfesorNombre: profesor.Nombre,
-      ProfesorUid: profesor.Uid
+      ProfesorUid: profesor.Uid,
+      // Alumnos: Array<string | string>()
+      Alumnos: Array<string>()
     }
 
     this.dataApi.AgregarUno(materia, 'materias');

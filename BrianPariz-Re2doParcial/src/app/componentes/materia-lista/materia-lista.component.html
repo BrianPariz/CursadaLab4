@@ -26,33 +26,49 @@
           <td mat-cell *matCellDef="let element"> {{element.ProfesorNombre}} </td>
         </ng-container>
 
-          <!-- <ng-container matColumnDef="Inscribirse">
-            <th mat-header-cell *matHeaderCellDef> Inscribirse </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-flat-button color="primary" *ngIf="!element.Activo"
-                (click)="activarDesactivar(element.Uid)">Inscribirse</button>
-              <button mat-flat-button color="primary" *ngIf="element.Activo"
-                (click)="activarDesactivar(element.Uid)">Desactivar</button>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="Inscribirse">
+          <th mat-header-cell *matHeaderCellDef> Inscribirse </th>
+          <td mat-cell *matCellDef="let element">
+
+            <div *ngIf="!estaInscripto(element.Alumnos); else inscripto">
+              <button mat-flat-button color="primary" (click)="inscribirse(element)">Inscribirse</button>
+            </div>
+            <ng-template #inscripto>
+              <button mat-flat-button color="primary" disabled>Inscripto</button>
+            </ng-template>
+          </td>
+        </ng-container>
 
         <ng-container matColumnDef="Alumnos">
           <th mat-header-cell *matHeaderCellDef> Alumnos </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-flat-button color="primary" *ngIf="!element.Activo"
-              (click)="activarDesactivar(element.Uid)">Activar</button>
-            <button mat-flat-button color="primary" *ngIf="element.Activo"
-              (click)="activarDesactivar(element.Uid)">Desactivar</button>
+
+            <button mat-flat-button color="primary" (click)="mostrarInscriptos(element.Alumnos)">Ver Inscriptos</button>
+
           </td>
-        </ng-container> -->
+        </ng-container>
 
         <!-- <ng-container matColumnDef="Fecha">
       <th mat-header-cell *matHeaderCellDef> Fecha </th>
       <td mat-cell *matCellDef="let element"> {{element.Fecha.toDate() | date: 'dd/M/yyyy'}} </td>
     </ng-container> -->
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <div *ngIf="perfil == 'Administrador'">
+          <tr mat-header-row *matHeaderRowDef="columsAdministrador"></tr>
+          <tr mat-row *matRowDef="let row; columns: columsAdministrador;"></tr>
+        </div>
+
+        <div *ngIf="perfil == 'Profesor'">
+          <tr mat-header-row *matHeaderRowDef="columsProfesor"></tr>
+          <tr mat-row *matRowDef="let row; columns: columsProfesor;"></tr>
+        </div>
+
+        <div *ngIf="perfil == 'Alumno'">
+          <tr mat-header-row *matHeaderRowDef="columsAlumno"></tr>
+          <tr mat-row *matRowDef="let row; columns: columsAlumno;"
+            [ngClass]="{'row-red': row.Cupos <= 10, 'row-yellow': row.Cupos >= 10, 'row-green': row.Cupos >= 20}"></tr>
+        </div>
+
       </table>
 
       <div *ngIf="noData | async" class="no-resultados">

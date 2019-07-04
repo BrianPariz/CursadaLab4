@@ -13,7 +13,7 @@ import { Perfil } from 'src/app/clases/Usuario';
 })
 export class MateriaListaComponent implements OnInit {
 
-  private displayedColumns : string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor'];
+  // private displayedColumns : string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor'];
   private columsAdministrador: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor'];
   private columsProfesor: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'Alumnos'];
   private columsAlumno: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor', 'Inscribirse'];
@@ -24,7 +24,7 @@ export class MateriaListaComponent implements OnInit {
 
   private perfil;
 
-  constructor(private dataApi: DataApiService, private us: UsuarioService) { 
+  constructor(private dataApi: DataApiService, private us: UsuarioService) {
     this.perfil = this.us.usuario.Perfil;
   }
 
@@ -36,7 +36,7 @@ export class MateriaListaComponent implements OnInit {
           this.materias = materias.filter(x => x.ProfesorUid == this.us.usuario.Uid);
         }
         else if (this.us.usuario.Perfil == Perfil.Alumno) {
-
+          this.materias = materias;
         }
         else {
           this.materias = materias;
@@ -47,17 +47,29 @@ export class MateriaListaComponent implements OnInit {
       });
   }
 
-  // getDisplayedColumns() {
-  //   if (this.perfil == Perfil.Profesor) {
-  //     return this.columsProfesor;
-  //   }
-  //   else if (this.us.usuario.Perfil == Perfil.Alumno) {
-  //     return this.columsAlumno;
-  //   }
-  //   else {
-  //     return this.columsAdministrador;
-  //   }
-  // }
+  estaInscripto(alumnos) {
+    var retorno = false;
+
+    if (alumnos && alumnos.length > 0) {
+      alumnos.forEach(element => {
+        if (element['uid'] == this.us.usuario.Uid) {
+          retorno = true;
+        }
+      });
+    }
+    
+    return retorno;
+  }
+
+  inscribirse(materia) {
+    materia.Alumnos.push({ uid: this.us.usuario.Uid, nombre: this.us.usuario.Nombre });
+    materia.Cupos = materia.Cupos - 1;
+    this.dataApi.ModificarUno(materia, "materias");
+  }
+
+  mostrarInscriptos(alumnos) {
+    
+  }
 
   // applyFilter(filterValue: string) {
   //   this.dataSource.filter = filterValue.trim().toLowerCase();

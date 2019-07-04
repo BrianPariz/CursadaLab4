@@ -10,6 +10,7 @@ export interface MateriaInterface {
     Cupos: number;
     ProfesorNombre: string;
     ProfesorUid: string;
-    Alumnos: Array<string | string>;
+    // Alumnos: Array<string | string>;
+    Alumnos: Array<string>;
     // Estado: EstadoTurno;
 }
