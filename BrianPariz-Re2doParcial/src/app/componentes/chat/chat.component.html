@@ -3,39 +3,67 @@
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
         <div class="card fat">
-          <div class="card-body" style="text-align: center;">
+          <div class="card-body mb-3" style="text-align: center;">
             <form>
-              <ul *ngFor="let mensaje of mensajes | async" class="ulChatUser">
+              <!-- <h4>Selecciona la materia para ingresar al chat</h4>
+              <mat-form-field class="mt-1">
+                <mat-label>Materias</mat-label>
+                <mat-select name="materias" [(ngModel)]="materias">
+                  <mat-option *ngIf="materias.length == 0">--</mat-option>
+                  <mat-option *ngFor="let materia of materias" [value]="materia.Nombre">
+                    {{materia.Nombre}}
+                  </mat-option>
+                </mat-select> -->
+              <!-- <mat-error *ngIf="profesor.touched && profesor.errors?.required && profesores.length > 0">
+                    Por favor, seleccione al profesor
+                  </mat-error>
+                  <mat-hint *ngIf="profesores.length == 0">
+                    No se encontraron profesores disponibles
+                  </mat-hint> -->
 
-                <li *ngIf="mensaje.UserUid != this.usuarioService.usuario.Uid; else liMe">
-                  <div class="divChatUser">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded">
-                      <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
-                      <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
-                    </a>
-                  </div>
-                </li>
+              <h4>Chat de Materias</h4>
+              <mat-form-field>
+                <mat-label>Materia</mat-label>
+                <mat-select [(ngModel)]="materiaSeleccionada" name="materia" (ngModelChange)="traerChatPorMateria()">
+                  <!-- <mat-option *ngIf="materias.length == 0">No hay materias</mat-option> -->
+                  <mat-option *ngFor="let materia of materias" [value]="materia.Nombre">
+                    {{materia.Nombre}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-                <ng-template #liMe>
-                  <li>
-                    <div class="divChatUserMe">
+              <div *ngIf="materiaSeleccionada">
+                <ul *ngFor="let mensaje of mensajes | async" class="ulChatUser">
+
+                  <li *ngIf="mensaje.UserUid != this.usuarioService.usuario.Uid; else liMe">
+                    <div class="divChatUser">
                       <a class="nav-link py-3 px-0 px-lg-3 rounded">
                         <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
                         <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
                       </a>
                     </div>
                   </li>
-                </ng-template>
 
-              </ul>
+                  <ng-template #liMe>
+                    <li>
+                      <div class="divChatUserMe">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded">
+                          <img src="{{mensaje.UrlImagen}}" class="img-responsive user-img">
+                          <span class="">{{mensaje.Nombre}}: {{ mensaje.Mensaje }}</span>
+                        </a>
+                      </div>
+                    </li>
+                  </ng-template>
 
-              <mat-form-field class="example-full-width">
-                <input matInput [(ngModel)]="this.mensaje.Mensaje" name="inputMsj" placeholder="Escribe tu mensaje.."
-                  autofocus>
-              </mat-form-field>
+                </ul>
 
-              <button mat-raised-button color="primary" (click)="NuevoMensaje()">Enviar</button>
+                <mat-form-field>
+                  <input matInput [(ngModel)]="this.mensaje.Mensaje" name="inputMsj" placeholder="Escribe tu mensaje.."
+                    autofocus>
+                </mat-form-field>
 
+                <button mat-raised-button color="primary" (click)="NuevoMensaje()">Enviar</button>
+              </div>
             </form>
           </div>
         </div>

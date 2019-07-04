@@ -4,4 +4,5 @@ export class Mensaje {
     UserUid: string;
     Nombre: string;
     UrlImagen:string;
+    Materia:string;
 }

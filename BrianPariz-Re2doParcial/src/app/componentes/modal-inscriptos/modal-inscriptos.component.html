@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Alumnos inscriptos a {{materia.Nombre}}</h1>
+<div mat-dialog-content>
+  <mat-list>
+    <mat-list-item *ngFor="let alumno of materia.Alumnos">
+      <p matLine> {{alumno['nombre']}} </p>
+    </mat-list-item>
+    <p matLine *ngIf="materia.Alumnos.length == 0"> No hay ningún alumno inscripto </p>
+  </mat-list>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>Aceptar</button>
+</div>

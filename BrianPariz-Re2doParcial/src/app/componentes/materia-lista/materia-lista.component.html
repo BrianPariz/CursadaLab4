@@ -43,7 +43,7 @@
           <th mat-header-cell *matHeaderCellDef> Alumnos </th>
           <td mat-cell *matCellDef="let element">
 
-            <button mat-flat-button color="primary" (click)="mostrarInscriptos(element.Alumnos)">Ver Inscriptos</button>
+            <button mat-flat-button color="primary" (click)="mostrarInscriptos(element)">Ver Inscriptos</button>
 
           </td>
         </ng-container>
@@ -65,8 +65,10 @@
 
         <div *ngIf="perfil == 'Alumno'">
           <tr mat-header-row *matHeaderRowDef="columsAlumno"></tr>
-          <tr mat-row *matRowDef="let row; columns: columsAlumno;"
-            [ngClass]="{'row-red': row.Cupos <= 10, 'row-yellow': row.Cupos >= 10, 'row-green': row.Cupos >= 20}"></tr>
+          <tr mat-row *matRowDef="let row; columns: columsAlumno;" [appCuposRows]="row.Cupos"></tr>
+
+          <!-- <tr mat-row *matRowDef="let row; columns: columsAlumno;"
+          [ngClass]="{'row-red': row.Cupos <= 10, 'row-yellow': row.Cupos >= 10, 'row-green': row.Cupos >= 20}"></tr> -->
         </div>
 
       </table>

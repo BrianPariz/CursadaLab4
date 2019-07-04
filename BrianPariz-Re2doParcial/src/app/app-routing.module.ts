@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'logearse', component: LoginComponent, canActivate: [AuthGuardService] },
   { path: 'registrarse', component: RegistroComponent, canActivate: [AuthGuardService] },
-  // { path: 'chat', component: ChatComponent, canActivate: [AuthGuardService] },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuardService] },
   { path: 'materiasAdmin', component: MateriaComponent, canActivate: [AuthGuardService] },
   { path: 'materias', component: MateriaListaComponent, canActivate: [AuthGuardService] },
   { path: 'usuarios', component: ListaUsuariosComponent, canActivate: [AuthGuardService] },

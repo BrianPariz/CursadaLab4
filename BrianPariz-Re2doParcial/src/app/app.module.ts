@@ -28,6 +28,8 @@ import { MateriaComponent } from './componentes/materia/materia.component';
 import { MateriaListaComponent } from './componentes/materia-lista/materia-lista.component';
 import { MateriaCreacionComponent } from './componentes/materia-creacion/materia-creacion.component';
 import { FilterComponent } from './componentes/filter/filter.component';
+import { CuposRowsDirective } from './directivas/cupos-rows.directive';
+import { ModalInscriptosComponent } from './componentes/modal-inscriptos/modal-inscriptos.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { FilterComponent } from './componentes/filter/filter.component';
     MateriaCreacionComponent,
     MateriaListaComponent,
     MateriaComponent,
-    FilterComponent
+    FilterComponent,
+    CuposRowsDirective,
+    ModalInscriptosComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,9 @@ import { FilterComponent } from './componentes/filter/filter.component';
     SimpleNotificationsModule
   ],
   providers: [AuthGuardService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ModalInscriptosComponent
+  ]
 })
 export class AppModule { }

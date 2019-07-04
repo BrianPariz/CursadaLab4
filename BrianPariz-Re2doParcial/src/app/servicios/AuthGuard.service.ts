@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
     let url: string = state.url;
 
     let logeado: boolean = this.usuarioService.isUserLoggedIn();
-
+    
     if (url == '/logearse' || url == '/registrarse') {
       if (!logeado)
         return true;
@@ -35,6 +35,10 @@ export class AuthGuardService implements CanActivate {
         else {
           return true;
         }
+      }
+
+      if (url == '/chat') {
+        return true;
       }
 
       // if (url == '/turnos') {

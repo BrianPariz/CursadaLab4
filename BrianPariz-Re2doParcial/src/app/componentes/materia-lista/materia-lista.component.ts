@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from 'src/app/servicios/DataApi.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { MateriaInterface } from 'src/app/clases/Materia';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { Perfil } from 'src/app/clases/Usuario';
+import { ModalInscriptosComponent } from '../modal-inscriptos/modal-inscriptos.component';
 
 @Component({
   selector: 'app-materia-lista',
@@ -13,7 +14,6 @@ import { Perfil } from 'src/app/clases/Usuario';
 })
 export class MateriaListaComponent implements OnInit {
 
-  // private displayedColumns : string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor'];
   private columsAdministrador: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor'];
   private columsProfesor: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'Alumnos'];
   private columsAlumno: string[] = ['NombreMateria', 'Cuatrimestre', 'Cupos', 'NombreProfesor', 'Inscribirse'];
@@ -24,7 +24,7 @@ export class MateriaListaComponent implements OnInit {
 
   private perfil;
 
-  constructor(private dataApi: DataApiService, private us: UsuarioService) {
+  constructor(private dataApi: DataApiService, private us: UsuarioService, public dialog: MatDialog) {
     this.perfil = this.us.usuario.Perfil;
   }
 
@@ -57,7 +57,7 @@ export class MateriaListaComponent implements OnInit {
         }
       });
     }
-    
+
     return retorno;
   }
 
@@ -67,8 +67,16 @@ export class MateriaListaComponent implements OnInit {
     this.dataApi.ModificarUno(materia, "materias");
   }
 
-  mostrarInscriptos(alumnos) {
-    
+  mostrarInscriptos(materia) {
+    const dialogRef = this.dialog.open(ModalInscriptosComponent, {
+      // width: '',
+      data: { materia: materia }
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    //   this.animal = result;
+    // });
   }
 
   // applyFilter(filterValue: string) {
