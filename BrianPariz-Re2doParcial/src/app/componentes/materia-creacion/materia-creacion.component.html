@@ -1,0 +1,70 @@
+<div class="card-wrapper">
+  <div class="card fat">
+    <div class="card-body">
+      <h4 class="card-title">Crear Materia</h4>
+      <form [formGroup]="formMaterias" (ngSubmit)="CrearMateria()" #f="ngForm" novalidate>
+
+        <!-- <mat-form-field>
+          <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Seleccione una fecha"
+            formControlName="fecha" disabled required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+          <mat-error *ngIf="fecha.errors?.required || fecha.touched">Por favor, seleccione una fecha</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <input matInput formControlName="nombre" placeholder="Nombre" required>
+          <mat-error *ngIf="nombre.errors?.required">
+            Nombre <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="nombre.errors?.pattern && nombre.touched">
+            Solo se permiten letras
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput formControlName="cuatrimestre" placeholder="Cuatrimestre" required>
+          <mat-error *ngIf="cuatrimestre.errors?.required">
+            Cuatrimestre <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="cuatrimestre.errors?.pattern && cuatrimestre.touched">
+            Solo se permiten letras
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput formControlName="cupos" placeholder="Cupos" required>
+          <mat-error *ngIf="cupos.errors?.required">
+            Cupos <strong>requeridos</strong>
+          </mat-error>
+          <mat-error *ngIf=" cupos.errors?.pattern && cupos.touched">
+            Solo se permiten números
+          </mat-error>
+          <mat-error *ngIf="cupos.errors?.maxlength && cupos.touched">
+            Máximo 3 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="mt-1">
+          <mat-label>Profesor</mat-label>
+          <mat-select formControlName="profesor" required>
+            <mat-option *ngIf="profesores.length == 0">--</mat-option>
+            <mat-option *ngFor="let profesor of profesores" [value]="profesor">
+              {{profesor.Nombre}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="profesor.touched && profesor.errors?.required && profesores.length > 0">
+            Por favor, seleccione al profesor
+          </mat-error>
+          <mat-hint *ngIf="profesores.length == 0">
+            No se encontraron profesores disponibles
+          </mat-hint>
+        </mat-form-field>
+
+        <div class="mt-5">
+          <button type="submit" mat-raised-button color="primary" [disabled]="formMaterias.invalid">Crear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
