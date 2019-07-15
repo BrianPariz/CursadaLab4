@@ -4,11 +4,11 @@
 #mainNav {
   font-family: $headings-font-family;
   font-weight: $headings-font-weight;
-  background-color: $black;
+  background-color: $primary;
   .navbar-brand {
     color: $white;
     &:hover {
-      color: $primary;
+      color: $white2;
     }
   }
   .navbar-nav {
@@ -17,10 +17,10 @@
       a.nav-link {
         color: $white;
         &:hover {
-          color: $primary;
+          color: $white2;
         }
         &.active {
-          color: $primary;
+          color: $white2;
         }
       }
     }
@@ -47,7 +47,7 @@
 }
 
 #btnMenuToggle {
-  background-color: $primary;
+  background-color: $white2;
   &:focus {
     outline: none;
   }

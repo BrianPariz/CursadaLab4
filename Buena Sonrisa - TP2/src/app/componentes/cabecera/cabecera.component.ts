@@ -17,6 +17,9 @@ export class CabeceraComponent implements OnInit {
   cliente = false;
   especialista = false;
 
+  imagenUrl = "";
+  nombre = "";
+
   constructor(private usuarioService: UsuarioService, private dataApi: DataApiService) { }
 
   ngOnInit() {
@@ -27,39 +30,52 @@ export class CabeceraComponent implements OnInit {
     this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
         this.dataApi.TraerUno(user.uid, 'usuarios').pipe(take(1)).subscribe(userx => {
-          this.usuarioService.usuario = userx;
-          
-          switch (this.usuarioService.usuario.Perfil) {
-            case Perfil.Administrador:
-              this.administrador = true;
-              this.cliente = false;
-              this.especialista = false;
-              this.recepcionista = false;
-              break;
-            case Perfil.Cliente:
-              this.cliente = true;
-              this.administrador = false;
-              this.especialista = false;
-              this.recepcionista = false;
-              break;
-            case Perfil.Recepcionista:
-              this.recepcionista = true;
-              this.administrador = false;
-              this.cliente = false;
-              this.especialista = false;
-              break;
-            case Perfil.Especialista:
-              this.especialista = true;
-              this.administrador = false;
-              this.cliente = false;
-              this.recepcionista = false;
-              break;
+
+          if (userx.Activo) {
+            this.usuarioService.usuario = userx;
+
+            this.imagenUrl = userx.ImagenUrl;
+            this.nombre = userx.Nombre;
+
+            switch (this.usuarioService.usuario.Perfil) {
+              case Perfil.Administrador:
+                this.administrador = true;
+                this.cliente = false;
+                this.especialista = false;
+                this.recepcionista = false;
+                break;
+              case Perfil.Cliente:
+                this.cliente = true;
+                this.administrador = false;
+                this.especialista = false;
+                this.recepcionista = false;
+                break;
+              case Perfil.Recepcionista:
+                this.recepcionista = true;
+                this.administrador = false;
+                this.cliente = false;
+                this.especialista = false;
+                break;
+              case Perfil.Especialista:
+                this.especialista = true;
+                this.administrador = false;
+                this.cliente = false;
+                this.recepcionista = false;
+                break;
+            }
+            this.estaLogeado = true;
+          }
+          else {
+            this.imagenUrl = "";
+            this.nombre = "";
+            this.estaLogeado = false;
           }
 
         });
-        this.estaLogeado = true;
       }
       else {
+        this.imagenUrl = "";
+        this.nombre = "";
         this.estaLogeado = false;
       }
     });
@@ -67,6 +83,8 @@ export class CabeceraComponent implements OnInit {
   }
 
   Deslogearse() {
+    this.imagenUrl = "";
+    this.nombre = "";
     this.usuarioService.DeslogearUsuario();
   }
 }
